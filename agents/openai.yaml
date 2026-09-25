@@ -1,0 +1,4 @@
+interface:
+  display_name: "lapage-strapi-cms"
+  short_description: "Operate LaPage CMS from the command line"
+  default_prompt: "Use $lapage-strapi-cms to inspect or update LaPage CMS content safely."
