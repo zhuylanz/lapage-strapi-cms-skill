@@ -17,7 +17,7 @@ Admin mutations use:
 POST   /content-manager/collection-types/{uid}
 POST   /content-manager/collection-types/{uid}/{documentId}/actions/publish
 DELETE /content-manager/collection-types/{uid}/{documentId}
-POST   /content-manager/single-types/{uid}/actions/publish   # web-data
+POST   /content-manager/collection-types/{uid}/{documentId}/actions/publish   # web-data (collection type; one entry per project)
 ```
 
 The request body is the item fields directly (not wrapped in `data`). For

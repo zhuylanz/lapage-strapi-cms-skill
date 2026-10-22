@@ -1,6 +1,6 @@
 {
   "name": "lapage-strapi-cms",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "private": true,
   "description": "LaPage Digital agent skill for operating LaPage Strapi CMS content from a dependency-free CLI.",
   "homepage": "https://github.com/zhuylanz/lapage-strapi-cms-skill#readme",

@@ -10,7 +10,7 @@ const RESOURCES = {
   authors: { api: '/api/generic-authors', uid: 'api::generic-author.generic-author' },
   'post-categories': { api: '/api/generic-post-categories', uid: 'api::generic-post-category.generic-post-category' },
   'product-categories': { api: '/api/generic-product-categories', uid: 'api::generic-product-category.generic-product-category' },
-  'web-data': { api: '/api/generic-web-data', uid: 'api::generic-web-datum.generic-web-datum', single: true },
+  'web-data': { api: '/api/generic-web-data', uid: 'api::generic-web-datum.generic-web-datum', stripComponentIds: true },
 };
 
 const args = process.argv.slice(2);
@@ -147,7 +147,13 @@ async function main() {
     const path = item.single ? `${uidPath}/actions/publish${options}` : `${uidPath}/${encodeURIComponent(documentId)}/actions/publish${options}`;
     result = await request(path, { method: 'POST', body: {}, auth: true });
   } else {
-    const data = scopedData(await dataPayload());
+    let data = scopedData(await dataPayload());
+    // web-data translations are components: ids from the published version don't match the draft, so let Strapi recreate them
+    if (item.stripComponentIds) {
+      const strip = (v) => Array.isArray(v) ? v.map(strip) : v && typeof v === 'object' ? Object.fromEntries(Object.entries(v).filter(([k]) => k !== 'id').map(([k, x]) => [k, k === 'message' ? x : strip(x)])) : v;
+      const { id, documentId: _d, createdAt, updatedAt, publishedAt, createdBy, updatedBy, status, localizations, ...rest } = data;
+      data = strip(rest);
+    }
     if (command === 'create') {
       result = await request(`${uidPath}/actions/publish${options}`, { method: 'POST', body: { ...data, ...(locale ? { locale } : {}), ...(option('--status') ? { status: option('--status') } : {}) }, auth: true });
     } else {
