@@ -6,8 +6,8 @@ All notable changes to `lapage-strapi-cms` are recorded here.
 
 ### Fixed
 
-- Publish `web-data` through the collection-type endpoint with its `documentId`; it is a collection type (one entry per project), not a single type.
-- Strip component `id` values and read-only metadata from `web-data` create/update payloads so Strapi recreates translation and script components instead of rejecting ids from the published version. JSON `message` values are left untouched.
+- Publish `web-data` through the collection-type endpoint with its `documentId`; it is a collection type (one entry per project), not a single type. The old single-type call let Strapi pick the document, which is only safe for roles that can see a single project.
+- Strip component `id` values and read-only metadata from `web-data` create/update payloads, so a payload copied from the published version (whose component ids differ from the draft) round-trips cleanly. JSON `message` values are left untouched.
 
 ## [1.1.0] - 2026-10-22
 
