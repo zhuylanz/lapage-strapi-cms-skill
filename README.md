@@ -85,6 +85,31 @@ For endpoint mappings and payload guidance, see
 [references/api.md](references/api.md). For the full agent workflow, see
 [SKILL.md](SKILL.md).
 
+## Update Check
+
+On first use in a session the agent checks this repository for a newer version
+and asks before updating:
+
+```bash
+node scripts/check-update.mjs          # one-line summary
+node scripts/check-update.mjs --json   # structured result
+node scripts/check-update.mjs --force  # bypass the 24h cache
+```
+
+The check reads `version` from the published `package.json` on `main`, caches
+the result in `~/.cache/lapage-skills/`, and never blocks the workflow when
+GitHub is unreachable. Set `LAPAGE_SKILL_UPDATE_CHECK=0` to disable it.
+Installing from a git clone lets the check offer a one-line `git pull --ff-only`
+upgrade.
+
+## Other LaPage Skills
+
+| Skill | What it does |
+| --- | --- |
+| [lapage-playwright-cli-skill](https://github.com/zhuylanz/lapage-playwright-cli-skill) | Automate browsers with Playwright CLI and LaPage profile conventions |
+| [lapage-codex-imagen](https://github.com/zhuylanz/lapage-codex-imagen) | Restore Codex image generation behind model routers |
+| [lapage-codex-websearch](https://github.com/zhuylanz/lapage-codex-websearch) | Restore Codex web search behind model routers |
+
 ## About LaPage Digital
 
 LaPage Digital builds practical digital systems for growing businesses,

@@ -9,6 +9,27 @@ Use `scripts/cms.mjs` for repeatable CMS reads and mutations. It hardcodes the
 LaPage host as `https://strapi-cms.lapage.vn`; do not add a user-controlled base
 URL or print credentials.
 
+## Before First Use In A Session: Check For Updates
+
+Run the update check once per session, before the first real command:
+
+```bash
+node scripts/check-update.mjs
+```
+
+It compares this skill's `package.json` version with the published version at
+https://github.com/zhuylanz/lapage-strapi-cms-skill and caches the answer for 24 hours.
+
+- `update-available`: tell the user the installed and latest versions and the
+  printed update command, and ask before running it. Continue with the
+  installed version if they decline.
+- `up-to-date`, `ahead`, `disabled`: continue silently.
+- `unavailable` (offline, timeout, GitHub error): continue with the installed
+  version. Never block the task on the update check.
+
+Use `--json` for structured output and `--force` to bypass the cache. Set
+`LAPAGE_SKILL_UPDATE_CHECK=0` to disable the check.
+
 ## Credentials
 
 The command requires these environment variables:
